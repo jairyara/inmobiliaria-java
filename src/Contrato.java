@@ -1,16 +1,16 @@
 public class Contrato {
 
     private Inmueble inmuebleContrato;
-    private Cliente clienteContrato;
     private Inmobiliaria inmobiliariaContrato;
     private String numeroContrato;
     private String fechaContrato;
     private double mesesContrato;
     private double valorContrato;
 
-    public Contrato(Inmueble inmuebleContrato, Cliente clienteContrato, Inmobiliaria inmobiliariaContrato, String numeroContrato, String fechaContrato, int mesesContrato) {
+    public Contrato() {}
+
+    public Contrato(Inmueble inmuebleContrato, Inmobiliaria inmobiliariaContrato, String numeroContrato, String fechaContrato, int mesesContrato) {
         this.inmuebleContrato = inmuebleContrato;
-        this.clienteContrato = clienteContrato;
         this.inmobiliariaContrato = inmobiliariaContrato;
         this.numeroContrato = numeroContrato;
         this.fechaContrato = fechaContrato;
@@ -57,14 +57,6 @@ public class Contrato {
         this.inmuebleContrato = inmuebleContrato;
     }
 
-    public Cliente getClienteContrato() {
-        return clienteContrato;
-    }
-
-    public void setClienteContrato(Cliente clienteContrato) {
-        this.clienteContrato = clienteContrato;
-    }
-
     public Inmobiliaria getInmobiliariaContrato() {
         return inmobiliariaContrato;
     }
@@ -73,7 +65,7 @@ public class Contrato {
         this.inmobiliariaContrato = inmobiliariaContrato;
     }
 
-    public void mostrarContrato() {
+    public void mostrarContrato(Cliente cliente) {
         System.out.println("----------------------------------------");
         System.out.println("\nContrato No." + getNumeroContrato());
         System.out.println("Fecha de contrato : " + getFechaContrato());
@@ -82,7 +74,7 @@ public class Contrato {
         System.out.println();
         System.out.println("----------------------------------------");
         System.out.println("Se celebra contrato de arrendamiento entre \n" + getInmobiliariaContrato().getNombreInmobiliaria() + " identificada con NIT " + getInmobiliariaContrato().getNitInmobiliaria());
-        System.out.println("y la persona " + getClienteContrato().getNombre() + " " + getClienteContrato().getApellido() + " identificada con documento número " + getClienteContrato().getIdentificacion());
+        System.out.println("y la persona " + cliente.getNombre() + " " + cliente.getApellido() + " identificada con documento número " + cliente.getIdentificacion());
         System.out.println("\n----------------------------------------\n");
 
     }
