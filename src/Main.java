@@ -106,7 +106,7 @@ public class Main {
                         break;
 
                     case 5:
-                        System.out.println("Ingrese identificación del cliente para creación del contrato");
+                        System.out.println("Ingrese identificación del cliente para consultar contratos asociados");
                         long consultaIDLista = Long.parseLong(br.readLine());
                         Cliente contratoClienteLista = null;
                         for (Cliente x : clientes) {
@@ -126,7 +126,7 @@ public class Main {
                         break;
 
                     case 6:
-                        System.out.println("Ingrese identificación del cliente para creación del contrato");
+                        System.out.println("Ingrese identificación del cliente para eliminar usuario");
                         long consultaIDEliminar = Long.parseLong(br.readLine());
                         Cliente contratoClienteEliminar = null;
                         int i = 0;
@@ -155,7 +155,7 @@ public class Main {
                 }
             } catch (Exception e) {
                 System.out.println("Intente de nuevo\n");
-                System.out.println(e);
+                System.out.println(e.getMessage());
             }
         }
 
