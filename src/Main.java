@@ -10,12 +10,9 @@ public class Main {
     public static void main(String[] args) throws IOException {
 
         Inmobiliaria inmobiliaria = new Inmobiliaria("Inmobiliaria Los Sauces", "Bogotá D.C", "Calle 93 No 11-43", "123456789");
-        Inmueble inmueble = new Inmueble(1032500358, "Julia", "Marin", "Bogotá", "Calle 145 No 11-23", false, 120000, 1500,true);
+        Inmueble inmueble = new Inmueble(1032500358, "Julia", "Marin", "Bogotá", "Calle 145 No 11-23", false, 120000, 1500, true);
         inmueble.setCommission();
-        Cliente cliente = new Cliente(0, "","","","","",0,0, "","");
-        Contrato contrato = new Contrato(null, null, null, "","",0);
         List<Cliente> clientes = new ArrayList<>();
-        List<Contrato> contratos = new ArrayList<>();
 
         boolean salir = false;
 
@@ -23,10 +20,10 @@ public class Main {
 
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
-        while(!salir) {
+        while (!salir) {
             try {
                 System.out.println("Menu principal");
-                System.out.println("Seleccione una opción: \n 1. Ver datos inmueble \n 2. Crear cliente \n 3. Crear contrato \n 4. Salir");
+                System.out.println("Seleccione una opción: \n 1. Ver datos inmueble \n 2. Crear cliente \n 3. Listar Clientes \n 4. Crear contrato \n 5. Listar contratos \n 6. Eliminar clientes \n 7. Salir");
                 int opcion = Integer.parseInt(br.readLine());
 
                 switch (opcion) {
@@ -34,6 +31,7 @@ public class Main {
                         inmueble.printPropertyInformation();
                         break;
                     case 2:
+                        Cliente cliente = new Cliente();
                         System.out.println("Creación de cliente");
                         System.out.println("Ingrese la identificación");
                         long id = Long.parseLong(br.readLine());
@@ -66,36 +64,88 @@ public class Main {
                         String tipoCuentaBancaria = br.readLine();
                         cliente.setTipoCuentaBancaria(tipoCuentaBancaria);
                         clientes.add(cliente);
-
-                        System.out.println(cliente.toString());
+                        System.out.println(cliente);
                         break;
                     case 3:
-                        if (!Objects.equals(cliente.getNombre(), "")) {
-                            contrato.setInmuebleContrato(inmueble);
-                            contrato.setInmobiliariaContrato(inmobiliaria);
-                            contrato.setClienteContrato(cliente);
-                            System.out.println("Crear contrato");
-                            System.out.println("Ingrese número de contrato");
-                            String numeroContrato = br.readLine();
-                            contrato.setNumeroContrato(numeroContrato);
-                            System.out.println("Ingrese la fecha del contrato");
-                            String fechaContrato = br.readLine();
-                            contrato.setFechaContrato(fechaContrato);
-                            System.out.println("Ingrese la cantidad de meses del contrato");
-                            int mesesContrato = Integer.parseInt(br.readLine());
-                            contrato.setMesesContrato(mesesContrato);
-                            System.out.println("Valor del contrato");
-                            double valorContrato = contrato.getMesesContrato() * contrato.getInmuebleContrato().getValueRentPropertyCommission();
-                            contrato.setValorContrato(valorContrato);
-                            System.out.println(contrato.getValorContrato());
-                            contratos.add(contrato);
-                            contrato.mostrarContrato();
-                        } else {
-                            System.out.println("No se ha creado el cliente para elaborar el contrato");
-                            System.out.println();
+                        System.out.println("Listado de clientes");
+                        for (int i = 0; i < clientes.size(); i++) {
+                            System.out.println(i + " - " + clientes.get(i).getNombre() + " " + clientes.get(i).getApellido());
                         }
                         break;
                     case 4:
+                        Contrato contrato = new Contrato();
+                        System.out.println("Ingrese identificación del cliente para creación del contrato");
+                        long consultaID = Long.parseLong(br.readLine());
+                        Cliente contratoCliente = null;
+                        for (Cliente x : clientes) {
+                            if (x.getIdentificacion() == consultaID) {
+                                contratoCliente = x;
+                                break;
+                            }
+                        }
+                        if (contratoCliente == null) {
+                            System.out.println("Identificación no existe");
+                            break;
+                        }
+                        contrato.setInmuebleContrato(inmueble);
+                        contrato.setInmobiliariaContrato(inmobiliaria);
+                        System.out.println("Ingrese número de contrato");
+                        String numeroContrato = br.readLine();
+                        contrato.setNumeroContrato(numeroContrato);
+                        System.out.println("Ingrese la fecha del contrato");
+                        String fechaContrato = br.readLine();
+                        contrato.setFechaContrato(fechaContrato);
+                        System.out.println("Ingrese la cantidad de meses del contrato");
+                        double mesesContrato = Double.parseDouble(br.readLine());
+                        contrato.setMesesContrato(mesesContrato);
+                        System.out.println("Valor del contrato");
+                        double valorContrato = contrato.getMesesContrato() * contrato.getInmuebleContrato().getValueRentPropertyCommission();
+                        contrato.setValorContrato(valorContrato);
+                        contratoCliente.addContract(contrato);
+                        contrato.mostrarContrato(contratoCliente);
+                        break;
+
+                    case 5:
+                        System.out.println("Ingrese identificación del cliente para consultar contratos asociados");
+                        long consultaIDLista = Long.parseLong(br.readLine());
+                        Cliente contratoClienteLista = null;
+                        for (Cliente x : clientes) {
+                            if (x.getIdentificacion() == consultaIDLista) {
+                                contratoClienteLista = x;
+                                break;
+                            }
+                        }
+                        if (contratoClienteLista == null) {
+                            System.out.println("Identificación no existe");
+                            break;
+                        }
+
+                        for (Contrato x : contratoClienteLista.getContratos()) {
+                            System.out.println(x);
+                        }
+                        break;
+
+                    case 6:
+                        System.out.println("Ingrese identificación del cliente para eliminar usuario");
+                        long consultaIDEliminar = Long.parseLong(br.readLine());
+                        Cliente contratoClienteEliminar = null;
+                        int i = 0;
+                        for (Cliente x : clientes) {
+                            if (x.getIdentificacion() == consultaIDEliminar) {
+                                contratoClienteEliminar = x;
+                                break;
+                            }
+                            i++;
+                        }
+                        if (contratoClienteEliminar == null) {
+                            System.out.println("Identificación no existe");
+                            break;
+                        }
+
+                        clientes.remove(i);
+
+                        break;
+                    case 7:
                         System.out.println("Gracias por usar la plataforma");
                         salir = true;
                         break;
@@ -105,7 +155,7 @@ public class Main {
                 }
             } catch (Exception e) {
                 System.out.println("Intente de nuevo\n");
-                System.out.println();
+                System.out.println(e.getMessage());
             }
         }
 
