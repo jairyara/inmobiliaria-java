@@ -1,9 +1,14 @@
+import java.util.ArrayList;
+import java.util.List;
+
 public class Cliente extends Persona {
     private long noCuentaBancaria;
     private String entidadBancaria;
     private String tipoCuentaBancaria;
+    private List<Contrato> contratos;
 
     public Cliente() {
+        this.contratos = new ArrayList<>();
     }
 
     public Cliente(long identificacion, String nombre, String apellido, String email, String ciudadResidencia, String direccionResidencia, long noCelular, long noCuentaBancaria, String entidadBancaria, String tipoCuentaBancaria) {
@@ -11,6 +16,7 @@ public class Cliente extends Persona {
         this.noCuentaBancaria = noCuentaBancaria;
         this.entidadBancaria = entidadBancaria;
         this.tipoCuentaBancaria = tipoCuentaBancaria;
+        this.contratos = new ArrayList<>();
     }
 
     public long getNoCuentaBancaria() {
@@ -35,6 +41,14 @@ public class Cliente extends Persona {
 
     public void setTipoCuentaBancaria(String tipoCuentaBancaria) {
         this.tipoCuentaBancaria = tipoCuentaBancaria;
+    }
+
+    public void addContract(Contrato contrato) {
+        contratos.add(contrato);
+    }
+
+    public List<Contrato> getContratos(){
+        return contratos;
     }
 
     @Override
